@@ -1,0 +1,80 @@
+/* src/css/navbar.css */
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+:root{
+  --box-background-color: #023768;
+  --light-box-background-color: #014e95;
+  --border-color: #ccc;
+  --card-background-color: #f5f5f5;
+  --font-color: white;
+}
+
+.home-nav { 
+  margin: 2rem;
+  border-radius: 2rem;
+  background-color: var(--box-background-color);
+  color: var(--font-color); 
+  position: sticky;
+  top: 0;
+  padding: 0.2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+  z-index: 10;
+}
+
+.nav-ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; 
+  list-style-type:none;
+}
+
+.nav-li {
+  white-space: nowrap;
+  width:fit-content;
+  padding-right: 3rem;
+  margin-block: auto;
+
+}
+
+.nav-a { 
+  color: var(--font-color); 
+  text-decoration: none; 
+  transition: text-decoration .4s 0s ease;
+}
+
+.nav-a:hover {
+  text-decoration: underline;
+  transition: text-decoration .4s ease;
+}
+
+section { 
+  padding: 2rem; 
+}
+
+.nav-btn {
+  margin: 0 0 0 15px;
+  padding: 0.7rem 0.8rem;
+  line-height: 1;
+  border: none;
+  color: var(--font-color);
+  background: transparent;
+  border-radius: 3px;
+  box-shadow: inset 0px 0px 0px 2px, 0px 2px 4px 0px rgba(255, 255, 255, 0.171);
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: transparent;
+  box-shadow: inset 0px 0px 0px 1px, 0px 4px 10px 0px rgba(255, 255, 255, 0.4), 0px 1px 3px 0px rgba(255, 255, 255, 0.2);
+}
+.nav-btn:hover {
+  text-decoration: none;
+}

@@ -1,0 +1,141 @@
+/* src/css/navbar.css */
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+:root{
+  --box-background-color: #023768;
+  --light-box-background-color: #014e95;
+  --slightly-grey-background-color: #f6fcff;
+  --border-color: #ccc;
+  --card-background-color: #f5f5f5;
+  --font-color: white;
+}
+
+.home-page-section {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Styles de la Page d'accueil */
+.facing-section {
+  padding-inline: 6rem;
+  flex: 1;
+}
+
+#mentor{
+  padding-block: 10%;
+  border-right: 1px solid var(--border-color);
+  text-align: left;
+  position: relative;
+}
+
+#student{
+  padding-block: 10%;
+  text-align: right;
+}
+
+.main-h1 {
+  color: #333;
+  margin-bottom: 0.6px;
+  font-size: 30px;
+}
+
+.main-p {
+  color: #666;
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+}
+
+.main-a {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background-color: var(--box-background-color);
+  color: var(--font-color);
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.main-a:hover {
+  background-color: var(--light-box-background-color);
+}
+
+.mentor-img {
+  position: absolute;
+  right: 0px;
+  transform: translateY(-90%);
+  z-index: -1;
+}
+
+/* Styles pour la section "Pourquoi Nous ?" */
+.why-us-section {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--slightly-grey-background-color);
+}
+
+.why-us-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.why-us-section li {
+  margin-bottom: 1rem;
+}
+
+.why-us-ul{
+  gap:-10rem
+}
+
+/* Styles pour la section "Tarifs/Formules" */
+.pricing-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pricing-card {
+  background-color: var(--card-background-color);
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.pricing-card li {
+  margin-bottom: 0.5rem;
+}
+
+/* Styles pour la section "Comment ça marche" */
+.how-it-works-section {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--slightly-grey-background-color);
+}
+
+.how-it-works-section ol {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.how-it-works-section li {
+  margin-bottom: 2rem;
+}
