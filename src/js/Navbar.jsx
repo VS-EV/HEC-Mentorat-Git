@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 import '../css/navbar.css'
 
-// Fonction de scroll sur une page avec plusierus sections
+// Fonction de scroll sur une page avec plusieurs sections
 const scrollToSection = (event, sectionId, gap) => {
     event.preventDefault();
     const section = document.getElementById(sectionId);
