@@ -1,6 +1,29 @@
 // src/components/Cards.jsx
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { initializeApp } from "firebase/app";
+import { getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where,
+  orderBy } from "firebase/firestore"
+
+import '../css/feedback.css'
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCtjchwiIcyzeNbx7XLo9ekldPsVmVcs5A",
+    authDomain: "mentor-hec.firebaseapp.com",
+    projectId: "mentor-hec",
+    storageBucket: "mentor-hec.appspot.com",
+    appId: "1:852168196060:web:f0cb26536636a1a0ca1919",
+  };
+  
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app)
 
 Card.propTypes = {
   id: PropTypes.string.isRequired,

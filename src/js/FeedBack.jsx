@@ -16,9 +16,9 @@ const firebaseConfig = {
     appId: "1:852168196060:web:f0cb26536636a1a0ca1919",
   };
   
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app)
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app)
 
 InputFilter.propTypes = {
     id: PropTypes.string.isRequired,

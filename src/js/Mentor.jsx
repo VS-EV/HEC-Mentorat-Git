@@ -35,7 +35,6 @@ function InputFilter({id, name, type, label, onChange, filtersActive}){
     )
 }
 
-
 isFiltered.propTypes = {
     mentor: PropTypes.shape({
         locations: PropTypes.arrayOf(PropTypes.string).isRequired,

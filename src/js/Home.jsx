@@ -1,4 +1,4 @@
-// src/js/Main.jsx 
+// src/js/Home.jsx 
 import React, { useState, useEffect } from "react";
 import {Link} from "react-router-dom"
 
@@ -42,13 +42,13 @@ export default function Home(){
                     <p className="main-p">Partagez votre passion pour le savoir et guidez les élèves sur le chemin de la réussite.</p>
                     <p className="main-p">Avec des tarifs compétitifs, vous serez amplement récompensé pour votre <br/>dévouement et votre expertise.</p>
                     <img className="mentor-img" src="src/assets/mentor.jpg" width='190' alt="" />
-                    <Link to="#findMentor" className="main-a">Donnez vos premiers cours dès maintenant</Link>
+                    <Link to="#afaire" className="main-a">Donnez vos premiers cours dès maintenant</Link>
                 </section>
                 <section className="facing-section" id="student">
                     <h1 className="main-h1">Devenez élève chez nous</h1>
                     <p className="main-p">Cours particuliers & soutien scolaire dispensés exclusivement par des étudiants de Hec.<br/>À partir de 14€/heure.</p>
                     <p className="main-p">Agence 100% étudiante agréée par l'État.<br/> 800 élèves déjà accompagnés.</p>
-                    <Link to="#findMentor" className="main-a">Trouvez votre mentor dès maintenant</Link>
+                    <Link to="/Mentor" className="main-a">Trouvez votre mentor dès maintenant</Link>
                 </section>
             </section>
 
