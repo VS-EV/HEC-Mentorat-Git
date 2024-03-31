@@ -21,7 +21,8 @@ function InputFilter({id, name, type, label, onChange, filtersActive}){
 
     return (
         <div className="mentor-input-and-label">
-            <input 
+            <input
+                className="mentor-input" 
                 id={id}
                 name={name}
                 type={type}

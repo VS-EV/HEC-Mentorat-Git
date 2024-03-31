@@ -54,6 +54,62 @@
   margin-left: 0.5rem;
 }
 
+/* Styles pour le bouton Activer/Désactiver les filtres */
+.mentor-filter-toggle-btn {
+  margin-left: 1rem;
+  background-color: var(--box-background-color);
+  color: var(--font-color);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  width: 10.5rem;
+  
+}
+
+.mentor-filter-toggle-btn:hover {
+  background-color: var(--light-box-background-color);
+}
+
+.filters-disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Styles pour les cases à cocher */
+.mentor-input-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid var(--box-background-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.mentor-input-checkbox:checked {
+  background-color: var(--box-background-color);
+  border-color: var(--box-background-color);
+}
+
+.mentor-input-checkbox:checked::after {
+  content: "\2713"; /* Caractère de la coche Unicode */
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.mentor-input-checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Styles pour les cartes de mentors */
 .mentor-main-container {
   margin-left: 4rem;
@@ -93,24 +149,3 @@
   background-color: var(--light-box-background-color);
 }
 
-/* Styles pour le bouton Activer/Désactiver les filtres */
-.mentor-filter-toggle-btn {
-  margin-left: 1rem;
-  background-color: var(--box-background-color);
-  color: var(--font-color);
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  width: 10.5rem;
-  
-}
-
-.mentor-filter-toggle-btn:hover {
-  background-color: var(--light-box-background-color);
-}
-
-.filters-disabled{
-  opacity: 0.5;
-  pointer-events: none;
-}

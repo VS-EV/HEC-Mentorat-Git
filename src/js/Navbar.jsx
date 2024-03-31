@@ -29,17 +29,17 @@ export default function Navbar(){
                                                                                 }}}>Tarifs</Link>
                 </li>
                 <li className="nav-li">
-                    <Link className="nav-a" to="/mentor" >Nos cours</Link>
+                    <Link className="nav-a" to="/mentor">Nos cours</Link>
                 </li>
                 <li className="nav-li">
-                    <Link className="nav-a" >Donner des cours</Link>
+                    <Link className="nav-a" to="/" onClick={(event) => {if (window.location.pathname === '/') {scrollToSection(event, 'why-us-section', 100);}}}>Donner des cours</Link>
                 </li>
                 <li className="nav-li">
-                    <Link className="nav-a" onClick={(event) => scrollToSection(event, 'contact')}>Nous contacter</Link>
+                    <Link className="nav-a" to="/feedback">Nous contacter</Link>
                 </li>
                 <li className="nav-li">
 
-                    <Link className="nav-a" to="/" onClick={(event) => {if (window.location.pathname === '/') {scrollToSection(event, 'why-us-section', 100);}}}>Se renseigner</Link>
+                    <Link className="nav-a" to="/" onClick={(event) => {if (window.location.pathname === '/') {scrollToSection(event, 'how-it-works-section', 100);}}}>Se renseigner</Link>
                 </li>
                 <li className="nav-li">
                     <Link className="nav-btn" to="/login">Connexion</Link>
