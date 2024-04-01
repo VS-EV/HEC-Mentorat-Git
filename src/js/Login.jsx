@@ -48,15 +48,15 @@ function authSignInWithEmail(emailInputEl, passwordInputEl) {
 async function authCreateAccountWithEmail(name, firstName, email, password, phoneNumber) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
     const user = userCredential.user;
+    const userId = user.uid;
     const userData = {
       name: name,
       firstName: firstName,
       email: user.email,
       phoneNumber: phoneNumber,
     };
-    await addDoc(collection(db, "users"), userData);
+    await addDoc(collection(db, `users/${userId}/profile`), userData);
   } catch (error) {
     console.error("Error creating account:", error);
   }

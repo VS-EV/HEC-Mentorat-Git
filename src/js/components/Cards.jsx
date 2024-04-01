@@ -1,17 +1,9 @@
 // src/components/Cards.jsx
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { initializeApp } from "firebase/app";
-import { getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp,
-  onSnapshot,
-  query,
-  where,
-  orderBy } from "firebase/firestore"
-
-import '../css/feedback.css'
+import { initializeApp} from "firebase/app";
+import { getAuth } from "firebase/auth"
+import { getFirestore, collection, addDoc, setDoc, getDocs, doc, deleteDoc } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyCtjchwiIcyzeNbx7XLo9ekldPsVmVcs5A",
@@ -23,6 +15,7 @@ const firebaseConfig = {
   
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app)
 
 Card.propTypes = {
@@ -34,11 +27,68 @@ Card.propTypes = {
   price: PropTypes.number,
 };
 
+
+async function getFavorites(userId) {
+  try {
+    const favoritesRef = collection(db, `users/${userId}/favorites`);
+    const querySnapshot = await getDocs(favoritesRef);
+    const favorites = [];
+
+    querySnapshot.forEach((doc) => {
+      const favorite = doc.data();
+      favorites.push(favorite.id);
+    });
+    return favorites;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des favoris :", error);
+    return [];
+  }
+}
+
+
 export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
   const [isFavorite, setIsFavorite] = useState(false);
+  
+  useEffect(() => {
+    const fetchFavoriteStatus = async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userId = user.uid;
+          const favorites = await getFavorites(userId);
+          const isFav = favorites.includes(id);
+          setIsFavorite(isFav);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la recherche des favoris :", error);
+      }
+    };
 
-  const toggleFavorite = () =>{
-    setIsFavorite(!isFavorite);
+    fetchFavoriteStatus();
+  }, [id]);
+
+  const toggleFavorite = async (id) =>{
+    try {
+      const user = auth.currentUser;
+      if (user){
+        if(!isFavorite){
+          const userId = user.uid;
+            const favoritesRef = collection(db, `users/${userId}/favorites`);
+            await setDoc(favoritesRef, id );         
+          setIsFavorite(true);  
+        } else {
+          console.log('unfavoriting')
+          const userId = user.uid;
+            const favoriteDocRef = doc(db, `users/${userId}/favorites`);
+            await deleteDoc(favoriteDocRef);
+          setIsFavorite(false);
+        }
+      } else {
+          console.log("Utilisateur non connecté.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de la carte aux favoris :", error);
+  }
   }
 
   return (
@@ -52,7 +102,7 @@ export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
           </div>
         )}
         <div className="card-price">{price}€/h</div>
-        <div className="card-heart" onClick={toggleFavorite}>{isFavorite ? <ion-icon name="heart"></ion-icon> : <ion-icon name="heart-outline"></ion-icon>}</div>
+        <div className="card-heart" onClick={() => toggleFavorite({id})}>{isFavorite ? <ion-icon name="heart"></ion-icon> : <ion-icon name="heart-outline"></ion-icon>}</div>
       </div>
     </div>
   );

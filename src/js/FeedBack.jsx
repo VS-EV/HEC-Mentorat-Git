@@ -26,6 +26,7 @@ InputFilter.propTypes = {
     type: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    placeholder: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
 }
 
