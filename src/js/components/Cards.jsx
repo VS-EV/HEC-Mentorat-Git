@@ -74,13 +74,22 @@ export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
         if(!isFavorite){
           const userId = user.uid;
             const favoritesRef = collection(db, `users/${userId}/favorites`);
-            await setDoc(favoritesRef, id );         
+            await addDoc(favoritesRef, id );         
           setIsFavorite(true);  
         } else {
           console.log('unfavoriting')
           const userId = user.uid;
-            const favoriteDocRef = doc(db, `users/${userId}/favorites`);
-            await deleteDoc(favoriteDocRef);
+            const favoriteDocRef = doc(db, `users/${userId}/favorites/${id}`);
+            const querySnapshot = await getDocs(favoriteDocRef);
+            querySnapshot.forEach((doc) => {
+              if (doc.data() === id){
+                console.log(doc.data())
+                const favoriteId = doc.id;
+                console.log(favoriteId)
+                deleteDoc(doc(db, `users/${userId}/favorites/${favoriteId}`));
+              }
+            });
+
           setIsFavorite(false);
         }
       } else {
