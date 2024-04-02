@@ -116,3 +116,5 @@ export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
     </div>
   );
 }
+
+export { getFavorites };

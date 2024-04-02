@@ -5,8 +5,26 @@ import PropTypes from "prop-types";
 
 import dataHomeMentor from "./components/mentor-data.js";
 import Card from "./components/Cards";
+import { getFavorites } from "./components/Cards";
 
 import '../css/mentor.css'
+
+import { initializeApp} from "firebase/app";
+import { getAuth } from "firebase/auth"
+import { getFirestore, collection, addDoc, setDoc, getDocs, doc, deleteDoc } from "firebase/firestore"
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCtjchwiIcyzeNbx7XLo9ekldPsVmVcs5A",
+    authDomain: "mentor-hec.firebaseapp.com",
+    projectId: "mentor-hec",
+    storageBucket: "mentor-hec.appspot.com",
+    appId: "1:852168196060:web:f0cb26536636a1a0ca1919",
+  };
+  
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app)
 
 InputFilter.propTypes = {
     id: PropTypes.string.isRequired,
@@ -45,16 +63,19 @@ isFiltered.propTypes = {
     filterLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
     filterAvailabilities: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
-function isFiltered(mentor, filterLocations, filterLevels, filterAvailabilities) {
+function isFiltered(mentor, filterLocations, filterLevels, filterAvailabilities, onlyFavorites, favorites) {
     const mentorLocations = mentor.locations || [];
     const mentorLevels = mentor.levels || [];
     const mentorAvailabilities = mentor.availabilities || [];
+    const isFavorite = favorites.includes(mentor.id);
+  
     return (
-        filterLocations.some(location => mentorLocations.includes(location)) &&
-        filterLevels.some(level => mentorLevels.includes(level)) &&
-        filterAvailabilities.some(availability => mentorAvailabilities.includes(availability))
+      (!onlyFavorites || isFavorite) &&
+      filterLocations.some(location => mentorLocations.includes(location)) &&
+      filterLevels.some(level => mentorLevels.includes(level)) &&
+      filterAvailabilities.some(availability => mentorAvailabilities.includes(availability))
     );
-}
+  }
 
 export default function Mentor(){
     const allLocations = ["online", "home", "outside"];
@@ -66,9 +87,16 @@ export default function Mentor(){
     const [filterAvailabilities, setFilterAvailabilities] = useState(allAvailabilities);
 
     const [filtersActive, setFiltersActive] = useState(false);
+    const [onlyFavorites, setOnlyFavorites] = useState(false);
+    const [favorites, setFavorites] = useState([]);
+
 
     const toggleFilters = () => {
         setFiltersActive(!filtersActive);
+    };
+
+    const toggleFavoriteFilter = () => {
+        setOnlyFavorites(!onlyFavorites);
     };
 
     useEffect(() => {
@@ -82,6 +110,19 @@ export default function Mentor(){
             setFilterAvailabilities(allAvailabilities)
         }
     }, [filtersActive]);
+
+    useEffect(() => {
+        const fetchFavorites = async () => {
+          const user = auth.currentUser;
+          if (user) {
+            const userId = user.uid;
+            const favs = await getFavorites(userId);
+            setFavorites(favs);
+          }
+        };
+      
+        fetchFavorites();
+      }, []);
 
     const handleLocationChange = (location, checked) => {
         setFilterLocations(
@@ -108,8 +149,8 @@ export default function Mentor(){
     };
 
     const filteredMentors = dataHomeMentor.filter(mentor =>
-        isFiltered(mentor, filterLocations, filterLevels, filterAvailabilities)
-    );
+        isFiltered(mentor, filterLocations, filterLevels, filterAvailabilities, onlyFavorites, favorites)
+      );
     
     return (
         <main className="mentor-main">
@@ -117,7 +158,7 @@ export default function Mentor(){
             <aside  className="mentor-aside" >
                 <div className="filter-container">
                     <h2  className="mentor-h2" >
-                        Filtres
+                        Filtres   
                         <button className="mentor-filter-toggle-btn" onClick={toggleFilters}>{filtersActive ? "Désactiver les filtres" : "Activer les filtres"}</button>
                     </h2>
                     
@@ -221,17 +262,25 @@ export default function Mentor(){
             </aside>
             {/* Affichage central des mentor cards */}
             <div className="mentor-main-container">
-                {filteredMentors.map((mentor) => (
-                <Card
-                    key={mentor.id}
-                    id={mentor.id}
-                    coverImg={mentor.coverImg}
-                    name={mentor.name}
-                    rating={mentor.rating}
-                    reviewCount={mentor.reviewCount}
-                    price={mentor.price}
-                />
-                ))}
+                <button className="mentor-only-favorite-btn" onClick={toggleFavoriteFilter}>
+                    Favoris 
+                    <div className="mentor-heart">
+                        {onlyFavorites ? <ion-icon name="heart"></ion-icon> : <ion-icon name="heart-outline"></ion-icon>} 
+                    </div>
+                </button>
+                <div className="mentor-main-card-container">
+                    {filteredMentors.map((mentor) => (
+                    <Card
+                        key={mentor.id}
+                        id={mentor.id}
+                        coverImg={mentor.coverImg}
+                        name={mentor.name}
+                        rating={mentor.rating}
+                        reviewCount={mentor.reviewCount}
+                        price={mentor.price}
+                    />
+                    ))}
+                </div>
             </div>
         </main>
     )

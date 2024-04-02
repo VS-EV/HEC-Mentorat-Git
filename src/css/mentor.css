@@ -13,6 +13,7 @@
   --box-background-color: #023768;
   --light-box-background-color: #014e95;
   --slightly-grey-background-color: #f6fcff;
+  --overlay-background-color: rgb(31, 31, 31);
   --border-color: #ccc;
   --card-background-color: #f5f5f5;
   --font-color: white;
@@ -55,7 +56,9 @@
 }
 
 /* Styles pour le bouton Activer/Désactiver les filtres */
-.mentor-filter-toggle-btn {
+
+
+.mentor-filter-toggle-btn{
   margin-left: 1rem;
   background-color: var(--box-background-color);
   color: var(--font-color);
@@ -64,7 +67,24 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   width: 10.5rem;
-  
+}
+
+.mentor-only-favorite-btn {
+  background-color: var(--overlay-background-color);  
+  color: var(--font-color);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
+.mentor-heart{
+  margin-left: 1rem;
+  margin-top: 0.2rem;
+  scale: 1.2;
 }
 
 .mentor-filter-toggle-btn:hover {
@@ -111,12 +131,15 @@
 }
 
 /* Styles pour les cartes de mentors */
-.mentor-main-container {
+.mentor-main-container{
   margin-left: 4rem;
+}
+
+.mentor-main-card-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2rem;
-  padding: 2rem;
+  padding-top: 2rem;
 }
 
 .mentor-card {
