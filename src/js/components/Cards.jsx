@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { initializeApp} from "firebase/app";
 import { getAuth } from "firebase/auth"
-import { getFirestore, collection, addDoc, setDoc, getDocs, doc, deleteDoc } from "firebase/firestore"
+import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyCtjchwiIcyzeNbx7XLo9ekldPsVmVcs5A",
@@ -34,8 +34,8 @@ async function getFavorites(userId) {
     const querySnapshot = await getDocs(favoritesRef);
     const favorites = [];
 
-    querySnapshot.forEach((doc) => {
-      const favorite = doc.data();
+    querySnapshot.forEach((fav) => {
+      const favorite = fav.data();
       favorites.push(favorite.id);
     });
     return favorites;
@@ -68,25 +68,24 @@ export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
   }, [id]);
 
   const toggleFavorite = async (id) =>{
+    console.log(id)
     try {
       const user = auth.currentUser;
       if (user){
         if(!isFavorite){
           const userId = user.uid;
             const favoritesRef = collection(db, `users/${userId}/favorites`);
-            await addDoc(favoritesRef, id );         
+            await addDoc(favoritesRef,{id});         
           setIsFavorite(true);  
         } else {
           console.log('unfavoriting')
           const userId = user.uid;
-            const favoriteDocRef = doc(db, `users/${userId}/favorites/${id}`);
+            const favoriteDocRef = collection(db, `users/${userId}/favorites`);
             const querySnapshot = await getDocs(favoriteDocRef);
-            querySnapshot.forEach((doc) => {
-              if (doc.data() === id){
-                console.log(doc.data())
-                const favoriteId = doc.id;
-                console.log(favoriteId)
-                deleteDoc(doc(db, `users/${userId}/favorites/${favoriteId}`));
+            querySnapshot.forEach((favId) => {
+              if (favId.data().id === id){
+                console.log('ok')
+                deleteDoc(doc(db, `users/${userId}/favorites`, `${favId.id}`));
               }
             });
 
@@ -111,7 +110,7 @@ export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
           </div>
         )}
         <div className="card-price">{price}€/h</div>
-        <div className="card-heart" onClick={() => toggleFavorite({id})}>{isFavorite ? <ion-icon name="heart"></ion-icon> : <ion-icon name="heart-outline"></ion-icon>}</div>
+        <div className="card-heart" onClick={() => toggleFavorite(id)}>{isFavorite ? <ion-icon name="heart"></ion-icon> : <ion-icon name="heart-outline"></ion-icon>}</div>
       </div>
     </div>
   );
