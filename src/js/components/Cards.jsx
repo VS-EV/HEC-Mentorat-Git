@@ -48,24 +48,6 @@ async function getFavorites(userId) {
 
 export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
   const [isFavorite, setIsFavorite] = useState(false);
-  
-  useEffect(() => {
-    const fetchFavoriteStatus = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          const userId = user.uid;
-          const favorites = await getFavorites(userId);
-          const isFav = favorites.includes(id);
-          setIsFavorite(isFav);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la recherche des favoris :", error);
-      }
-    };
-
-    fetchFavoriteStatus();
-  }, [id]);
 
   const toggleFavorite = async (id) =>{
     console.log(id)
@@ -98,6 +80,24 @@ export default function Card({ id, coverImg, name, rating, reviewCount,price}) {
       console.error("Erreur lors de l'ajout de la carte aux favoris :", error);
   }
   }
+
+  useEffect(() => {
+    const fetchFavoriteStatus = async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userId = user.uid;
+          const favorites = await getFavorites(userId);
+          const isFav = favorites.includes(id);
+          setIsFavorite(isFav);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la recherche des favoris :", error);
+      }
+    };
+
+    fetchFavoriteStatus();
+  }, [id]);
 
   return (
     <div key={id} id={id} className="home-card">

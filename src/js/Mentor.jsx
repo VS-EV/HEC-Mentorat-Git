@@ -151,7 +151,7 @@ export default function Mentor(){
     const filteredMentors = dataHomeMentor.filter(mentor =>
         isFiltered(mentor, filterLocations, filterLevels, filterAvailabilities, onlyFavorites, favorites)
       );
-    
+
     return (
         <main className="mentor-main">
             {/* Sidebar avec tous les filtres */}
